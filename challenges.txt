@@ -37,7 +37,8 @@ SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) = 1 ORDER
 SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) > 1;
 
 --13. Actor appeared in most films
-CREATE VIEW `a_on_fa` AS (SELECT `film_actor`.`actor_id`, `film_actor`.`film_id`, `first_name`, `last_name` FROM `film_actor` JOIN `actor` ON `film_actor`.actor_id = `actor`.actor_id);
+CREATE VIEW `a_on_fa` AS (SELECT `film_actor`.`actor_id`, `film_actor`.`film_id`, `first_name`, `last_name` 
+FROM `film_actor` JOIN `actor` ON `film_actor`.actor_id = `actor`.actor_id);
 SELECT `first_name`, `last_name` FROM `a_on_fa` GROUP BY `actor_id` ORDER BY COUNT(`film_id`) DESC LIMIT 1;
 
 --14. Academy Dinosaur due
@@ -47,7 +48,11 @@ SELECT `first_name`, `last_name` FROM `a_on_fa` GROUP BY `actor_id` ORDER BY COU
 SELECT AVG(length) from film;
 
 --16. Avg runtime for each film category
--------------------------
+CREATE VIEW `f_on_fc` AS
+(SELECT `film_category`.`category_id`, `film_category`.`film_id`, `length` 
+FROM `film_category` JOIN `film` ON `film_category`.film_id = `film`.film_id);
+
+SELECT AVG(length), category_id FROM `f_on_fc` GROUP BY category_id;
 
 --17. All movies featuring a robot
 SELECT title FROM film WHERE `description` LIKE "%Robot%"
@@ -74,10 +79,7 @@ SELECT `name` FROM `language` ORDER BY `name` DESC;
 SELECT first_name, last_name FROM actor WHERE last_name LIKE "%son" ORDER BY first_name ASC;
 
 --25. Category that contains the most films
+SELECT COUNT(film_id) AS `films_in_cat`, category_id FROM film_category GROUP BY category_id ORDER BY `films_in_cat` LIMIT 1;
 
-
-
-
-Film ID   Actor ID  
 
 

@@ -10,7 +10,7 @@ SELECT * FROM actor WHERE first_name = "John";
 SELECT * FROM actor WHERE last_name = "Neeson";
 
 --4. Actors with ID numbers divisible by 10
-SELECT * FROM actor WHERE (actor_id%10) =0;
+SELECT * FROM actor WHERE (actor_id%10) = 0;
 
 --5. Movie description with an ID of 100
 SELECT * FROM film WHERE film_id = 100;
@@ -24,23 +24,24 @@ SELECT * FROM film WHERE rating != "R";
 --8. 10 shortest movies
 SELECT * FROM film ORDER BY length ASC LIMIT 10;
 
---9. Movie with longest runtime without LIMIT
------------------------------------
+--9. Movies with longest runtime without LIMIT
+SELECT * FROM film WHERE length = (SELECT MAX(length) FROM film);
 
 --10. Movies with deleted scenes
 SELECT * FROM film WHERE special_features LIKE "%Deleted Scenes";
 
 --11. Use HAVING, reverse alphabetical list the last names that aren't repeated
-
+SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) = 1 ORDER BY last_name DESC;
 
 --12. Use HAVING, list last names that show more than once (H to L)
-----------------------------------------
+SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) > 1;
 
 --13. Actor appeared in most films
----------------------------------
+CREATE VIEW `a_on_fa` AS (SELECT `film_actor`.`actor_id`, `film_actor`.`film_id`, `first_name`, `last_name` FROM `film_actor` JOIN `actor` ON `film_actor`.actor_id = `actor`.actor_id);
+SELECT `first_name`, `last_name` FROM `a_on_fa` GROUP BY `actor_id` ORDER BY COUNT(`film_id`) DESC LIMIT 1;
 
 --14. Academy Dinosaur due
------------------
+-----------------------------------
 
 --15. Avg runtime of all films 
 SELECT AVG(length) from film;
@@ -54,15 +55,29 @@ SELECT title FROM film WHERE `description` LIKE "%Robot%"
 --18. Movies released in 2010
 SELECT * FROM film WHERE release_year = "2010";
 
---Titles of horror movies
-SELECT title FROM film WHERE `film_id` = (SELECT `film_id` FROM film_category WHERE category_id = (SELECT `category_id` FROM category WHERE `name` = "Horror"));
+--19. Titles of horror movies
+SELECT title FROM film WHERE `film_id` IN (SELECT `film_id` FROM film_category WHERE category_id = (SELECT `category_id` FROM category WHERE `name` = "Horror"));
 
---Full name of staff member with ID 2
---Movies with Fred Costner
---Distinct countries?
---Name of every language in reverse-alph
---Names of every actor who's surname ends with "-son" in alph ord by forename
---Catagory that contains the most films
+--20. Full name of staff member with ID 2
+SELECT first_name, last_name FROM staff WHERE staff_id = "2";
+
+--21. Movies with Fred Costner
+SELECT title FROM film WHERE film_id IN (SELECT film_id FROM film_actor WHERE actor_id = "16");
+
+--22. Distinct countries?
+SELECT DISTINCT COUNT(*) FROM country;
+
+--23. Name of every language in reverse-alph
+SELECT `name` FROM `language` ORDER BY `name` DESC;
+
+--24. Names of every actor who's surname ends with "-son" in alph ord by forename
+SELECT first_name, last_name FROM actor WHERE last_name LIKE "%son" ORDER BY first_name ASC;
+
+--25. Category that contains the most films
 
 
---Films from 2010
+
+
+Film ID   Actor ID  
+
+

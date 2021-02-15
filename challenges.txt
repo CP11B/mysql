@@ -1,0 +1,68 @@
+USE sakila; 
+
+--1. List all actors
+SELECT * FROM actor;
+
+--2. Surname of actor with forename "John"
+SELECT * FROM actor WHERE first_name = "John";
+
+--3. Actors with surname "Neeson"
+SELECT * FROM actor WHERE last_name = "Neeson";
+
+--4. Actors with ID numbers divisible by 10
+SELECT * FROM actor WHERE (actor_id%10) =0;
+
+--5. Movie description with an ID of 100
+SELECT * FROM film WHERE film_id = 100;
+
+--6. Every R rated movie
+SELECT * FROM film WHERE rating = "R";
+
+--7. Every non-R-rated-movie
+SELECT * FROM film WHERE rating != "R";
+
+--8. 10 shortest movies
+SELECT * FROM film ORDER BY length ASC LIMIT 10;
+
+--9. Movie with longest runtime without LIMIT
+-----------------------------------
+
+--10. Movies with deleted scenes
+SELECT * FROM film WHERE special_features LIKE "%Deleted Scenes";
+
+--11. Use HAVING, reverse alphabetical list the last names that aren't repeated
+SELECT DISTINCT last_name FROM ACTOR ORDER BY last_name DESC;
+
+--12. Use HAVING, list last names that show more than once (H to L)
+----------------------------------------
+
+--13. Actor appeared in most films
+---------------------------------
+
+--14. Academy Dinosaur due
+-----------------
+
+--15. Avg runtime of all films 
+SELECT AVG(length) from film;
+
+--16. Avg runtime for each film category
+-------------------------
+
+--17. All movies featuring a robot
+SELECT title FROM film WHERE `description` LIKE "%Robot%"
+
+--18. Movies released in 2010
+SELECT * FROM film WHERE release_year = "2010";
+
+--Titles of horror movies
+SELECT title FROM film WHERE `film_id` = (SELECT `film_id` FROM film_category WHERE category_id = (SELECT `category_id` FROM category WHERE `name` = "Horror"));
+
+--Full name of staff member with ID 2
+--Movies with Fred Costner
+--Distinct countries?
+--Name of every language in reverse-alph
+--Names of every actor who's surname ends with "-son" in alph ord by forename
+--Catagory that contains the most films
+
+
+--Films from 2010

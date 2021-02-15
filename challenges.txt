@@ -31,7 +31,7 @@ SELECT * FROM film ORDER BY length ASC LIMIT 10;
 SELECT * FROM film WHERE special_features LIKE "%Deleted Scenes";
 
 --11. Use HAVING, reverse alphabetical list the last names that aren't repeated
-SELECT DISTINCT last_name FROM ACTOR ORDER BY last_name DESC;
+
 
 --12. Use HAVING, list last names that show more than once (H to L)
 ----------------------------------------
